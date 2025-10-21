@@ -1,13 +1,13 @@
 # Web Automation Project
 
-This project provides a FastAPI-based API to automate login and price retrieval for the "Sauce Labs Backpack" product on the [SauceDemo](https://www.saucedemo.com/) website. It uses Playwright for browser automation and is designed for the SauceDemo website as part of an internship project for the General Services Department.
+This project automates login and price retrieval for the "Sauce Labs Backpack" product on the [SauceDemo](https://www.saucedemo.com/) website. It provides a FastAPI-based API and a standalone script, built for the General Services Department internship using Playwright for browser automation.
 
 ## Overview
 
 The project includes:
-- A FastAPI server (`app.py`) with a POST `/automate` endpoint to trigger automation.
-- An automation script (`main.py`) that logs into SauceDemo, checks for the "Sauce Labs Backpack" product, and retrieves its price.
-- A test client in `test_api.py` to call the API.
+- `app.py`: FastAPI server with a POST `/automate` endpoint to trigger automation.
+- `main.py`: Standalone script with `run_automation` to log into SauceDemo and retrieve the product price.
+- `test_api.py`: Test client to call the API.
 
 ## Prerequisites
 
@@ -39,20 +39,24 @@ The project includes:
    HEADLESS=true
    ```
 
-4. **Run the FastAPI Server**:
+4. **Run the FastAPI Server** (for API usage):
    ```bash
-   uvicorn app:app --host 127.0.0.1 --port 8000 --reload
+   uvicorn app:app --host 127.0.0.1 --port 8000
    ```
 
-5. **Test the API**:
-   Run the test client:
-   ```bash
-   python test_api.py
-   ```
-   Or send a POST request to `http://127.0.0.1:8000/automate` with:
-   ```json
-   {"run": true}
-   ```
+5. **Run the Automation**:
+   - **Via API**: In a separate terminal, run:
+     ```bash
+     python test_api.py
+     ```
+     Or send a POST request to `http://127.0.0.1:8000/automate`:
+     ```json
+     {"run": true}
+     ```
+   - **Directly**: Run the standalone script:
+     ```bash
+     python main.py
+     ```
 
 ## API Documentation
 
@@ -87,19 +91,21 @@ The project includes:
 ## Project Structure
 
 - `app.py`: FastAPI server with `/automate` endpoint.
-- `main.py`: Automation script (`run_automation`).
-- `test_api.py`: API Test Client.
+- `main.py`: Standalone automation script (`run_automation`).
+- `test_api.py`: API test client.
 - `.env`: Environment variables (optional).
 - `requirements.txt`: Dependencies (optional).
+- `automation.log`: Log file for API events.
 
 ## Notes
 
-- Designed for SauceDemo; may break if the website's HTML changes.
-- The API uses a subprocess to run `main.py`.
-- No authentication, not suitable for public deployment.
+- Designed for SauceDemo; may break if the website’s HTML changes.
+- Logs are written to `automation.log` for API events.
+- No authentication; intended for local use.
+- Automation takes 2–5 seconds due to browser operations.
 
 ## Troubleshooting
 
-- **Timeout Errors**: Check internet connection or increase timeouts in `main.py`.
+- **Connection Error**: If `python test_api.py` fails with a connection error, ensure the FastAPI server is running (`uvicorn app:app --host 127.0.0.1 --port 8000`) in a separate terminal.
+- **Timeout Errors**: Check internet connection or increase timeouts in `main.py` (e.g., `timeout=20000`).
 - **Login Issues**: Verify `SAUCE_USER` and `SAUCE_PASS` in `.env`.
-- **API Failure**: Ensure server is running and port 8000 is open.
