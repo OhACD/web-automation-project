@@ -1,14 +1,28 @@
+import requests
 import os
 import json
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 
-"""
-Runs the SauceDemo login and product price check.
-Returns a structured result dictionary.
-"""
 def run_automation():
-    
+    """
+    Automates login to SauceDemo and retrieves the price of the Sauce Labs Backpack product.
+
+    Uses Playwright to interact with the SauceDemo website, logging in with provided credentials
+    and extracting the price of the specified product for the Web Automation Project.
+
+    Environment Variables:
+        SAUCE_USER (str): Username for login (default: "standard_user").
+        SAUCE_PASS (str): Password for login (default: "secret_sauce").
+        HEADLESS (str): Run browser in headless mode if "true" (default: "true").
+
+    Returns:
+        dict: A dictionary containing:
+            - status (str): "success" or "error".
+            - product (str, optional): Name of the product if successful.
+            - price (str, optional): Price of the product if successful.
+            - message (str, optional): Error message if failed.
+    """
     username = os.getenv("SAUCE_USER", "standard_user")
     password = os.getenv("SAUCE_PASS", "secret_sauce")
     headless = os.getenv("HEADLESS", "true").lower() == "true"
@@ -54,7 +68,6 @@ def run_automation():
 
         finally:
             browser.close()
-
 
 if __name__ == "__main__":
     result = run_automation()

@@ -6,6 +6,21 @@ logger = logging.getLogger(__name__)
 
 @app.post("/automate")
 async def automate_task(task: dict):
+    """
+    Triggers automation for the Web Automation Project to log into SauceDemo and retrieve
+    the price of the Sauce Labs Backpack product.
+
+    Executes the automation script as a subprocess and returns its output. The script
+    automates browser interactions using Playwright.
+
+    Args:
+        task (dict): A dictionary containing a "run" key (must be True to execute automation).
+
+    Returns:
+        dict: A dictionary containing:
+            - status (str): "success" or "error".
+            - result (dict or str): The automation result or error message.
+    """
     try:
         script_path = os.path.join(os.path.dirname(__file__), "main.py")
 
