@@ -1,6 +1,6 @@
 # Web Automation Project
 
-This project automates login and price retrieval for the "Sauce Labs Backpack" product on the [SauceDemo](https://www.saucedemo.com/) website. It provides a FastAPI-based API and a standalone script, built for the General Services Department internship using Playwright for browser automation.
+This project automates login and price retrieval for the "Sauce Labs Backpack" product on the [SauceDemo](https://www.saucedemo.com/) website. It provides a FastAPI-based API and a standalone script, using Playwright for browser automation.
 
 ## Overview
 
@@ -19,7 +19,7 @@ The project includes:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <https://github.com/OhACD/web-automation-project>
+   git clone https://github.com/OhACD/web-automation-project
    cd web-automation-project
    ```
 
