@@ -19,7 +19,7 @@ The project includes:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/OhACD/web-automation-project>
    cd web-automation-project
    ```
 
