@@ -26,8 +26,8 @@ The project includes:
 2. **Install Dependencies**:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install fastapi==0.115.0 uvicorn==0.30.6 requests==2.32.3 playwright==1.47.0
+   .venv/Scripts/Activate.ps1
+   pip install -r requirements.txt
    playwright install
    ```
 
