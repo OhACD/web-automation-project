@@ -25,7 +25,7 @@ The project includes:
 
 2. **Install Dependencies**:
    ```bash
-   python -m venv venv
+   python -m venv .venv
    .venv/Scripts/Activate.ps1
    pip install -r requirements.txt
    playwright install
