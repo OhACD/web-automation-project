@@ -34,5 +34,6 @@ jobs:
           SAUCE_USER: standard_user
           SAUCE_PASS: secret_sauce
           HEADLESS: "true"
+          AUTOMATION_API_KEY: ${{ secrets.AUTOMATION_API_KEY }}
         run: |
           python main.py
