@@ -4,7 +4,7 @@ url = "http://127.0.0.1:8000/automate"
 
 payload = {
     "run": True,
-    "item": "Sauce Labs Bolt T-Shirt",  # optional, overrides .env ITEM_TO_LOOKUP
+    "item": "Sauce Labs Fleece Jacket", # optional, overrides default ITEM_TO_LOOKUP
     "timeout": 45                   # optional, overrides default SCRIPT_TIMEOUT
 }
 
