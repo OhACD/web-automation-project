@@ -25,9 +25,11 @@ The project includes:
 
 2. **Install Dependencies**:
    ```bash
-   python -m venv .venv
-   .venv/Scripts/Activate.ps1
+   python -m venv venv
+   source .venv/Scripts/activate.ps1  
    pip install -r requirements.txt
+   pip install -r dev-requirements.txt
+   pip install "httpx>=0.27.0" "httpcore>=1.0.0"
    playwright install
    ```
 
@@ -36,6 +38,7 @@ The project includes:
    ```plaintext
    SAUCE_USER=standard_user
    SAUCE_PASS=secret_sauce
+   ITEM_TO_LOOKUP=Sauce Labs Bolt T-shirt
    HEADLESS=true
    ```
 
@@ -51,7 +54,8 @@ The project includes:
      ```
      Or send a POST request to `http://127.0.0.1:8000/automate`:
      ```json
-     {"run": true}
+     {"run": true} or
+     {"run": true, "item": "{item_name}"}
      ```
    - **Directly**: Run the standalone script:
      ```bash
@@ -65,7 +69,7 @@ The project includes:
 - **Description**: Triggers automation to log into SauceDemo and retrieve the price of "Sauce Labs Backpack".
 - **Request Body**:
   ```json
-  {"run": true}
+  {"run": true, "item": "{item_name}"}
   ```
 - **Response**:
   - Success:
@@ -74,7 +78,7 @@ The project includes:
       "status": "success",
       "result": {
         "status": "success",
-        "product": "Sauce Labs Backpack",
+        "product": "Product Name",
         "price": "$29.99"
       }
     }
@@ -92,15 +96,15 @@ The project includes:
 
 - `app.py`: FastAPI server with `/automate` endpoint.
 - `main.py`: Standalone automation script (`run_automation`).
-- `test_api.py`: API test client.
+- `test_api.py`: API testing.
+- `post_request.py`: Example of sending a post request.
 - `.env`: Environment variables (optional).
-- `requirements.txt`: Dependencies (optional).
-- `automation.log`: Log file for API events.
+- `requirements.txt`: Dependencies.
+- `dev-requirements.txt`: Dependencies.
 
 ## Notes
 
 - Designed for SauceDemo; may break if the website’s HTML changes.
-- Logs are written to `automation.log` for API events.
 - No authentication; intended for local use.
 - Automation takes 2–5 seconds due to browser operations.
 

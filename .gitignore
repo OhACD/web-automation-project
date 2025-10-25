@@ -1,4 +1,11 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
+.venv/
 venv/
+.env
 __pycache__/
 *.pyc
+.pytest_cache/
+automation.log
+.DS_Store
+.idea/
+.vscode/
