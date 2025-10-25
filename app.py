@@ -11,13 +11,6 @@ async def automate_task(run_status: Union[bool, None], task: dict):
     Triggers automation only if either:
       - URL path param run_status=True 
       - JSON body contains "run": true
-
-    Args:
-        run_status (bool or None): True/False from path.
-        task (dict): Request JSON body, e.g. {"run": true}
-
-    Returns:
-        dict: Automation result or skip message.
     """
     try:
         # Whether the automation should run or not
@@ -58,7 +51,13 @@ async def automate_task(run_status: Union[bool, None], task: dict):
         else:
             data = {"error_output": "No output at all."}
 
-        status = "success" if result.returncode == 0 else "error"
+        if isinstance(data, dict) and data.get("status") == "success":
+            status = "success"
+        elif result.returncode != 0:
+            status = "error"
+        else:
+            status = "error" if data.get("status") == "error" else "success"
+
         return {"status": status, "result": data}
 
     except Exception as e:
