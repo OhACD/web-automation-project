@@ -8,6 +8,7 @@ The project includes:
 - `app.py`: FastAPI server with a POST `/automate` endpoint to trigger automation.
 - `main.py`: Standalone script with `run_automation` to log into SauceDemo and retrieve the product price.
 - `test_api.py`: Test client to call the API.
+- `post_request.py`: Example for sending a POST request.
 
 ## Prerequisites
 
@@ -97,7 +98,7 @@ The project includes:
 - `app.py`: FastAPI server with `/automate` endpoint.
 - `main.py`: Standalone automation script (`run_automation`).
 - `test_api.py`: API testing.
-- `post_request.py`: Example of sending a post request.
+- `post_request.py`: Example for sending a POST request.
 - `.env`: Environment variables (optional).
 - `requirements.txt`: Dependencies.
 - `dev-requirements.txt`: Dependencies.

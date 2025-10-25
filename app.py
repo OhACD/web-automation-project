@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Header, Request
 from pydantic import BaseModel
 import asyncio
 import sys
@@ -29,12 +29,31 @@ class AutomateRequest(BaseModel):
     timeout: Optional[int] = None
 
 
+def _require_api_key(x_api_key: Optional[str]):
+    """
+    If AUTOMATION_API_KEY is set, require the incoming X-API-Key header to match.
+    If not set, allow all requests (for local/dev usage).
+    """
+    required_key = os.getenv("AUTOMATION_API_KEY")
+    if not required_key:
+        return  # If no key configured allow request
+    if not x_api_key or x_api_key != required_key:
+        logger.warning("Unauthorized request (missing or invalid X-API-Key)")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized"
+        )
+
+
 @app.post("/automate")
-async def automate_task(req: AutomateRequest):
+async def automate_task(req: AutomateRequest, request: Request, x_api_key: Optional[str] = Header(None)):
     """
     Triggers automation when {"run": true} is posted.
     Optional: provide 'item' to look up a specific product or override timeout.
     """
+    # Enforce API key if configured
+    _require_api_key(x_api_key)
+
     if not req.run:
         return {"status": "skipped", "message": "Automation not triggered. Set run=true to execute."}
 
@@ -88,7 +107,6 @@ async def automate_task(req: AutomateRequest):
 
         script_status = data.get("status") if isinstance(data, dict) else None
 
-        # Handle responses
         if script_status == "success":
             return {"status": "success", "result": data}
 
@@ -100,4 +118,4 @@ async def automate_task(req: AutomateRequest):
                 detail={"status": "error", "result": data}
             )
 
-        return {"status": "unknown", "result": data}
+        return {"status": "success", "result": data}

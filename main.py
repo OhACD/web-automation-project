@@ -88,7 +88,7 @@ def run_automation() -> dict:
                 art = _save_artifacts(page, prefix="timeout")
                 return {"status": "error", "message": "Login timed out or page failed to load", "artifacts": art}
 
-            # 🔧 Modular product lookup
+            # Modular product lookup
             LOG.info(f"Searching for item: {item_to_lookup}")
             item_locator = page.locator(".inventory_item", has_text=item_to_lookup)
 

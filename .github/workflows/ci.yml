@@ -1,0 +1,38 @@
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r dev-requirements.txt
+      - name: Install Playwright browsers
+        run: |
+          python -m playwright install --with-deps
+      - name: Run tests
+        run: pytest -q
+  smoke:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install deps & browsers
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps
+      - name: Run smoke script
+        env:
+          SAUCE_USER: standard_user
+          SAUCE_PASS: secret_sauce
+          HEADLESS: "true"
+        run: |
+          python main.py
